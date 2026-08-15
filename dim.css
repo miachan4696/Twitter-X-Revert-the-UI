@@ -1,0 +1,252 @@
+:root[data-x-old-media-dim="true"] {
+  color-scheme: dark;
+  --x-old-media-main: #15202b;
+  --x-old-media-card: #192734;
+  --x-old-media-hover: #22303c;
+  --x-old-media-border: #38444d;
+  --x-old-media-accent: #1d9bf0;
+  --x-old-media-text: #f7f9f9;
+  --x-old-media-muted: #8899a6;
+  --user-bg-color: #15202b !important;
+  --background: 210 26% 13%;
+  --border: 207 16% 26%;
+  --input: 207 16% 26%;
+  --color-background: 210 26% 13%;
+  --color-gray-0: 210 26% 13%;
+  --color-gray-50: 207 16% 26%;
+  --color-gray-100: 207 16% 26%;
+}
+
+html[data-x-old-media-dim="true"] body.LightsOut {
+  --color: var(--x-old-media-muted);
+  --border-color: var(--x-old-media-border);
+  --border: 207 16% 26%;
+  --input: 207 16% 26%;
+}
+
+html[data-x-old-media-dim="true"],
+html[data-x-old-media-dim="true"] body,
+html[data-x-old-media-dim="true"] #react-root,
+html[data-x-old-media-dim="true"] main,
+html[data-x-old-media-dim="true"] [data-testid="primaryColumn"],
+html[data-x-old-media-dim="true"] [data-testid="sidebarColumn"] {
+  background-color: var(--x-old-media-main) !important;
+  color: var(--x-old-media-text) !important;
+}
+
+html[data-x-old-media-dim="true"] [role="dialog"],
+html[data-x-old-media-dim="true"] [role="menu"],
+html[data-x-old-media-dim="true"] [data-testid="Dropdown"],
+html[data-x-old-media-dim="true"] [data-testid="sheetDialog"] {
+  background-color: var(--x-old-media-card) !important;
+  color: var(--x-old-media-text) !important;
+}
+
+/* XのReact Native Webが生成するLights Out用カラーユーティリティ */
+html[data-x-old-media-dim="true"] .r-kemksi,
+html[data-x-old-media-dim="true"] .r-yfoy6g,
+html[data-x-old-media-dim="true"] .r-14lw9ot {
+  background-color: var(--x-old-media-main) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-1niwhzg.r-sdzlij {
+  background-color: transparent !important;
+}
+
+html[data-x-old-media-dim="true"] [data-testid$="RichTextInputContainer"] {
+  background-color: transparent !important;
+}
+
+html[data-x-old-media-dim="true"] [data-testid="sidebarColumn"] .r-kemksi,
+html[data-x-old-media-dim="true"] [role="dialog"] .r-kemksi,
+html[data-x-old-media-dim="true"] [role="menu"] .r-kemksi,
+html[data-x-old-media-dim="true"] [data-testid="Dropdown"] .r-kemksi,
+html[data-x-old-media-dim="true"] [data-testid="sheetDialog"] .r-kemksi {
+  background-color: var(--x-old-media-card) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-g2wdr4 {
+  background-color: var(--x-old-media-card) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-g2wdr4 [role="link"]:hover {
+  background-color: var(--x-old-media-hover) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-z32n2g,
+html[data-x-old-media-dim="true"] .r-1hdo0pc {
+  background-color: var(--x-old-media-hover) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-5zmot {
+  background-color: rgb(21 32 43 / 85%) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-1kqtdi0,
+html[data-x-old-media-dim="true"] .r-1roi411,
+html[data-x-old-media-dim="true"] .r-1xc7w19 {
+  border-color: var(--x-old-media-border) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-2sztyj,
+html[data-x-old-media-dim="true"] .r-12s0y0c,
+html[data-x-old-media-dim="true"] .r-fyhzqi {
+  border-top-color: var(--x-old-media-border) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-1igl3o0,
+html[data-x-old-media-dim="true"] .r-rull8r {
+  border-bottom-color: var(--x-old-media-border) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-motplv {
+  border-left-color: var(--x-old-media-border) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-1hm43qg {
+  border-right-color: var(--x-old-media-border) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-16cnnyw {
+  border-color: var(--x-old-media-hover) !important;
+}
+
+html[data-x-old-media-dim="true"] .r-gu4em3,
+html[data-x-old-media-dim="true"] .r-1bnu78o,
+html[data-x-old-media-dim="true"] .r-1shrkeu {
+  background-color: var(--x-old-media-border) !important;
+}
+
+html[data-x-old-media-dim="true"] form[role="search"] input {
+  background-color: transparent !important;
+}
+
+html[data-x-old-media-dim="true"] [data-testid="sidebarColumn"] .r-kemksi:has(form[role="search"]) {
+  background-color: transparent !important;
+}
+
+html[data-x-old-media-dim="true"] [role="dialog"] .r-cl2sl0,
+html[data-x-old-media-dim="true"] [data-testid="sheetDialog"] .r-cl2sl0 {
+  background-color: var(--x-old-media-card) !important;
+}
+
+html[data-x-old-media-dim="true"] .x-old-media-dimmed-main {
+  background-color: var(--x-old-media-main) !important;
+}
+
+html[data-x-old-media-dim="true"] .x-old-media-dimmed-card {
+  background-color: var(--x-old-media-card) !important;
+}
+
+html[data-x-old-media-dim="true"] [style*="background-color: rgb(0, 0, 0)"],
+html[data-x-old-media-dim="true"] [style*="background-color: rgb(255, 255, 255)"],
+html[data-x-old-media-dim="true"] [style*="background-color: rgb(247, 249, 249)"],
+html[data-x-old-media-dim="true"] [style*="background-color: #000"],
+html[data-x-old-media-dim="true"] [style*="background-color: #fff"] {
+  background-color: var(--x-old-media-main) !important;
+}
+
+html[data-x-old-media-dim="true"] [style*="background-color: rgb(22, 24, 28)"],
+html[data-x-old-media-dim="true"] [style*="background-color: rgb(24, 24, 27)"],
+html[data-x-old-media-dim="true"] [style*="background-color: rgb(239, 243, 244)"],
+html[data-x-old-media-dim="true"] [style*="background-color: rgb(239,243,244)"] {
+  background-color: var(--x-old-media-card) !important;
+}
+
+html[data-x-old-media-dim="true"] [style*="background-color: rgb(32, 35, 39)"],
+html[data-x-old-media-dim="true"] [style*="background-color: rgba(15, 20, 25"],
+html[data-x-old-media-dim="true"] [style*="background-color: rgba(231, 233, 234"] {
+  background-color: var(--x-old-media-hover) !important;
+}
+
+html[data-x-old-media-dim="true"] [style*="border-color: rgb(47, 51, 54)"],
+html[data-x-old-media-dim="true"] [style*="border-color: rgb(207, 217, 222)"],
+html[data-x-old-media-dim="true"] [style*="border-color: rgb(239, 243, 244)"],
+html[data-x-old-media-dim="true"] [style*="border-bottom-color: rgb(47, 51, 54)"],
+html[data-x-old-media-dim="true"] [style*="border-bottom-color: rgb(207, 217, 222)"] {
+  border-color: var(--x-old-media-border) !important;
+}
+
+html[data-x-old-media-dim="true"] [style*="color: rgb(15, 20, 25)"],
+html[data-x-old-media-dim="true"] [style*="color: rgb(0, 0, 0)"],
+html[data-x-old-media-dim="true"] [style*="color: rgb(231, 233, 234)"],
+html[data-x-old-media-dim="true"] [style*="color: rgb(247, 249, 249)"] {
+  color: var(--x-old-media-text) !important;
+  fill: currentColor;
+}
+
+html[data-x-old-media-dim="true"] [style*="color: rgb(83, 100, 113)"],
+html[data-x-old-media-dim="true"] [style*="color: rgb(113, 118, 123)"] {
+  color: var(--x-old-media-muted) !important;
+  fill: currentColor;
+}
+
+html[data-x-old-media-dim="true"] a,
+html[data-x-old-media-dim="true"] [style*="color: rgb(29, 155, 240)"],
+html[data-x-old-media-dim="true"] [style*="color: rgb(29, 161, 242)"] {
+  --x-old-media-link: var(--x-old-media-accent);
+}
+
+html[data-x-old-media-dim="true"] :is(
+  [data-testid="SideNav_NewTweet_Button"],
+  [data-testid="tweetButton"],
+  [data-testid="tweetButtonInline"],
+  [data-testid$="-follow"]
+) {
+  background-color: #eff3f4 !important;
+  border-color: #eff3f4 !important;
+  color: #0f1419 !important;
+}
+
+html[data-x-old-media-dim="true"] :is(
+  [data-testid="SideNav_NewTweet_Button"],
+  [data-testid="tweetButton"],
+  [data-testid="tweetButtonInline"],
+  [data-testid$="-follow"]
+) * {
+  color: #0f1419 !important;
+  fill: currentColor !important;
+}
+
+html[data-x-old-media-dim="true"] :is(
+  [data-testid="SideNav_NewTweet_Button"],
+  [data-testid="tweetButton"],
+  [data-testid="tweetButtonInline"],
+  [data-testid$="-follow"]
+):hover {
+  background-color: #d7dbdc !important;
+  border-color: #d7dbdc !important;
+}
+
+html[data-x-old-media-dim="true"] :is(
+  [data-testid="tweetButton"],
+  [data-testid="tweetButtonInline"]
+):is(:disabled, [aria-disabled="true"]) {
+  opacity: 0.5;
+}
+
+#x-old-media-dim-choice {
+  cursor: pointer;
+}
+
+#x-old-media-dim-choice:focus-visible,
+#x-old-media-dim-choice [role="radio"]:focus-visible {
+  outline: 2px solid #1d9bf0;
+  outline-offset: 2px;
+}
+
+#x-old-media-dim-choice .x-old-media-dim-label {
+  font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+#x-old-media-dim-choice .x-old-media-dim-inline-preview {
+  display: inline-grid;
+  grid-template-columns: repeat(2, 12px);
+  width: 24px;
+  height: 24px;
+  margin-inline-end: 8px;
+  overflow: hidden;
+  border: 1px solid #38444d;
+  border-radius: 6px;
+  vertical-align: middle;
+}

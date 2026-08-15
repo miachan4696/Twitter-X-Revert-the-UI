@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Twitter(X) Revert the UI",
+  "version": "1.0.2",
+  "description": "X（旧Twitter）を馴染みのある以前のレイアウトに変更し、ダークブルーモードも復活させます。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "minimum_chrome_version": "111",
+  "content_scripts": [
+    {
+      "matches": ["https://x.com/*", "https://twitter.com/*"],
+      "js": ["feature-flag.js", "dim.js"],
+      "css": ["dim.css"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": false,
+      "match_about_blank": false
+    }
+  ]
+}

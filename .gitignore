@@ -1,0 +1,6 @@
+PRIVACY.md
+SECURITY.md
+
+# ビルド成果物と配布用ファイル
+RELEASE/
+*.zip
