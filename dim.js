@@ -11,6 +11,17 @@
   const MISSING_COOKIE = "__missing__";
   const DISPLAY_ROUTES = new Set(["/settings/display", "/i/display"]);
   const NATIVE_THEME_LABEL = /^(default|lights?\s*out|dark|light|デフォルト|ライトアウト|ダーク|ライト|消灯)$/i;
+  const SHADOW_STYLE_ATTR = "data-x-old-media-shadow-style";
+  const SHADOW_CSS = `
+    [data-xchat-root="route"] {
+      background-color: #15202b !important;
+      --bg-background: 210 26% 13% !important;
+      color: #f7f9f9 !important;
+    }
+  `;
+
+
+
 
   const diagnostics = globalThis.__xOldMedia;
   if (diagnostics && typeof diagnostics === "object") {
@@ -73,8 +84,10 @@
   }
 
   let originalThemeColor;
+  let themeColorMeta;
   function syncThemeColor(enabled) {
-    const meta = document.querySelector('meta[name="theme-color"]');
+    if (!themeColorMeta?.isConnected) themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    const meta = themeColorMeta;
     if (!meta) return;
     if (enabled) {
       if (originalThemeColor === undefined) originalThemeColor = meta.getAttribute("content");
@@ -84,6 +97,29 @@
       else meta.setAttribute("content", originalThemeColor);
       originalThemeColor = undefined;
     }
+  }
+
+  // DIM turns off without a reload, so track injections and keep sweeping until a cleanup pass empties them.
+  let shadowStyleInjected = false;
+
+  function injectShadowStyle(host) {
+    const root = host.shadowRoot;
+    if (!root) return;
+
+    const existing = root.querySelector(`style[${SHADOW_STYLE_ATTR}]`);
+
+    if (!readPreference()) {
+      existing?.remove();
+      shadowStyleInjected = false;
+      return;
+    }
+    if (existing) return;
+
+    const style = document.createElement("style");
+    style.setAttribute(SHADOW_STYLE_ATTR, "");
+    style.textContent = SHADOW_CSS;
+    root.appendChild(style);
+    shadowStyleInjected = true;
   }
 
   let scanFrame = 0;
@@ -103,6 +139,10 @@
     }
   }
 
+    function scanShadowHosts(root = document) {
+        root.querySelectorAll('[data-testid="xchatEmbedRoute"]').forEach(injectShadowStyle);
+    }
+
   function scanSubtree(root) {
     if (!(root instanceof Element)) return;
     dimElement(root);
@@ -117,8 +157,8 @@
     for (const root of roots) scanSubtree(root);
   }
 
-  function queueDimScan(nodes) {
-    if (!readPreference()) return;
+  function queueDimScan(nodes, enabled = readPreference()) {
+    if (!enabled) return;
     for (const node of nodes) if (node instanceof Element) pendingScanRoots.add(node);
     if (pendingScanRoots.size && !scanFrame) scanFrame = requestAnimationFrame(flushDimScan);
   }
@@ -139,7 +179,10 @@
     else root.removeAttribute(ROOT_ATTRIBUTE);
     syncThemeColor(enabled);
     if (enabled && document.body) queueDimScan([document.body]);
-    else if (!enabled) clearDimScanClasses();
+    else if (!enabled) {
+      if (shadowStyleInjected) scanShadowHosts();
+      clearDimScanClasses();
+    }
     if (diagnostics && typeof diagnostics === "object") diagnostics.dimEnabled = enabled;
   }
 
@@ -374,9 +417,12 @@
   applyRootState(readPreference());
 
   const observer = new MutationObserver((mutations) => {
-    scheduleChoiceCheck();
-    if (!readPreference()) return;
-    for (const mutation of mutations) if (mutation.addedNodes.length) queueDimScan(mutation.addedNodes);
+    const enabled = readPreference();
+    // pushState fires neither popstate nor hashchange, so only a DOM mutation can unmount a mounted choice.
+    if (isDisplayRoute() || document.getElementById(CHOICE_ID)) scheduleChoiceCheck();
+    if (enabled || shadowStyleInjected) scanShadowHosts();
+    if (!enabled) return;
+    for (const mutation of mutations) if (mutation.addedNodes.length) queueDimScan(mutation.addedNodes, enabled);
     syncThemeColor(true);
   });
   observer.observe(document.documentElement, { childList: true, subtree: true });
@@ -390,6 +436,7 @@
 
   for (const delay of [0, 500, 1500, 3000]) {
     setTimeout(() => {
+        scanShadowHosts();
       if (readPreference() && document.body) queueDimScan([document.body]);
     }, delay);
   }

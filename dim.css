@@ -9,6 +9,7 @@
   --x-old-media-muted: #8899a6;
   --user-bg-color: #15202b !important;
   --background: 210 26% 13%;
+  --bg-background: 210 26% 13%;
   --border: 207 16% 26%;
   --input: 207 16% 26%;
   --color-background: 210 26% 13%;
@@ -40,6 +41,10 @@ html[data-x-old-media-dim="true"] [data-testid="Dropdown"],
 html[data-x-old-media-dim="true"] [data-testid="sheetDialog"] {
   background-color: var(--x-old-media-card) !important;
   color: var(--x-old-media-text) !important;
+}
+
+html[data-x-old-media-dim="true"] {
+    background-color: var(--x-old-media-main) !important;
 }
 
 /* XのReact Native Webが生成するLights Out用カラーユーティリティ */
@@ -223,6 +228,10 @@ html[data-x-old-media-dim="true"] :is(
   [data-testid="tweetButtonInline"]
 ):is(:disabled, [aria-disabled="true"]) {
   opacity: 0.5;
+}
+
+html[data-x-old-media-dim="true"] :is(.bg-background, .bg-background\/50) {
+  background-color: var(--x-old-media-main) !important;
 }
 
 #x-old-media-dim-choice {
