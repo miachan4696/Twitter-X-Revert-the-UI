@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Twitter(X) Revert the UI",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "X（旧Twitter）を馴染みのある以前のレイアウトに変更し、ダークブルーモードも復活させます。",
   "icons": {
     "16": "icons/icon16.png",

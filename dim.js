@@ -11,6 +11,17 @@
   const MISSING_COOKIE = "__missing__";
   const DISPLAY_ROUTES = new Set(["/settings/display", "/i/display"]);
   const NATIVE_THEME_LABEL = /^(default|lights?\s*out|dark|light|デフォルト|ライトアウト|ダーク|ライト|消灯)$/i;
+  const SHADOW_STYLE_ATTR = "data-x-old-media-shadow-style";
+  const SHADOW_CSS = `
+    [data-xchat-root="route"] {
+      background-color: #15202b !important;
+      --bg-background: 210 26% 13% !important;
+      color: #f7f9f9 !important;
+    }
+  `;
+
+
+
 
   const diagnostics = globalThis.__xOldMedia;
   if (diagnostics && typeof diagnostics === "object") {
@@ -86,6 +97,24 @@
     }
   }
 
+  function injectShadowStyle(host) {
+    const root = host.shadowRoot;
+    if (!root) return;
+
+    const existing = root.querySelector(`style[${SHADOW_STYLE_ATTR}]`);
+
+    if (!readPreference()) {
+      existing?.remove();
+      return;
+    }
+    if (existing) return;
+
+    const style = document.createElement("style");
+    style.setAttribute(SHADOW_STYLE_ATTR, "");
+    style.textContent = SHADOW_CSS;
+    root.appendChild(style);
+  }
+
   let scanFrame = 0;
   const pendingScanRoots = new Set();
 
@@ -102,6 +131,10 @@
       element.classList.add(SCANNED_CARD_CLASS);
     }
   }
+
+    function scanShadowHosts(root = document) {
+        root.querySelectorAll('[data-testid="xchatEmbedRoute"]').forEach(injectShadowStyle);
+    }
 
   function scanSubtree(root) {
     if (!(root instanceof Element)) return;
@@ -375,7 +408,8 @@
 
   const observer = new MutationObserver((mutations) => {
     scheduleChoiceCheck();
-    if (!readPreference()) return;
+    scanShadowHosts();
+      if (!readPreference()) return;
     for (const mutation of mutations) if (mutation.addedNodes.length) queueDimScan(mutation.addedNodes);
     syncThemeColor(true);
   });
@@ -390,6 +424,7 @@
 
   for (const delay of [0, 500, 1500, 3000]) {
     setTimeout(() => {
+        scanShadowHosts();
       if (readPreference() && document.body) queueDimScan([document.body]);
     }, delay);
   }
