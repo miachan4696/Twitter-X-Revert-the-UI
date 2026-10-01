@@ -230,8 +230,8 @@ html[data-x-old-media-dim="true"] :is(
   opacity: 0.5;
 }
 
-.bg-background, .bg-background\/50 {
-  background-color: var(--background)
+html[data-x-old-media-dim="true"] :is(.bg-background, .bg-background\/50) {
+  background-color: var(--x-old-media-main) !important;
 }
 
 #x-old-media-dim-choice {

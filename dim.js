@@ -84,8 +84,10 @@
   }
 
   let originalThemeColor;
+  let themeColorMeta;
   function syncThemeColor(enabled) {
-    const meta = document.querySelector('meta[name="theme-color"]');
+    if (!themeColorMeta?.isConnected) themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    const meta = themeColorMeta;
     if (!meta) return;
     if (enabled) {
       if (originalThemeColor === undefined) originalThemeColor = meta.getAttribute("content");
@@ -97,6 +99,9 @@
     }
   }
 
+  // DIM turns off without a reload, so track injections and keep sweeping until a cleanup pass empties them.
+  let shadowStyleInjected = false;
+
   function injectShadowStyle(host) {
     const root = host.shadowRoot;
     if (!root) return;
@@ -105,6 +110,7 @@
 
     if (!readPreference()) {
       existing?.remove();
+      shadowStyleInjected = false;
       return;
     }
     if (existing) return;
@@ -113,6 +119,7 @@
     style.setAttribute(SHADOW_STYLE_ATTR, "");
     style.textContent = SHADOW_CSS;
     root.appendChild(style);
+    shadowStyleInjected = true;
   }
 
   let scanFrame = 0;
@@ -150,8 +157,8 @@
     for (const root of roots) scanSubtree(root);
   }
 
-  function queueDimScan(nodes) {
-    if (!readPreference()) return;
+  function queueDimScan(nodes, enabled = readPreference()) {
+    if (!enabled) return;
     for (const node of nodes) if (node instanceof Element) pendingScanRoots.add(node);
     if (pendingScanRoots.size && !scanFrame) scanFrame = requestAnimationFrame(flushDimScan);
   }
@@ -172,7 +179,10 @@
     else root.removeAttribute(ROOT_ATTRIBUTE);
     syncThemeColor(enabled);
     if (enabled && document.body) queueDimScan([document.body]);
-    else if (!enabled) clearDimScanClasses();
+    else if (!enabled) {
+      if (shadowStyleInjected) scanShadowHosts();
+      clearDimScanClasses();
+    }
     if (diagnostics && typeof diagnostics === "object") diagnostics.dimEnabled = enabled;
   }
 
@@ -407,10 +417,12 @@
   applyRootState(readPreference());
 
   const observer = new MutationObserver((mutations) => {
-    scheduleChoiceCheck();
-    scanShadowHosts();
-      if (!readPreference()) return;
-    for (const mutation of mutations) if (mutation.addedNodes.length) queueDimScan(mutation.addedNodes);
+    const enabled = readPreference();
+    // pushState fires neither popstate nor hashchange, so only a DOM mutation can unmount a mounted choice.
+    if (isDisplayRoute() || document.getElementById(CHOICE_ID)) scheduleChoiceCheck();
+    if (enabled || shadowStyleInjected) scanShadowHosts();
+    if (!enabled) return;
+    for (const mutation of mutations) if (mutation.addedNodes.length) queueDimScan(mutation.addedNodes, enabled);
     syncThemeColor(true);
   });
   observer.observe(document.documentElement, { childList: true, subtree: true });
